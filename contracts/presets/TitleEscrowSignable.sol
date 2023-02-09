@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "../TitleEscrow.sol";
 import "../utils/SigHelper.sol";
-import { BeneficiaryTransferEndorsement } from "../lib/TitleEscrowStructs.sol";
+import "../lib/TitleEscrowStructs.sol";
 import "../interfaces/ITitleEscrowSignable.sol";
 import "../interfaces/TitleEscrowSignableErrors.sol";
 
@@ -29,7 +29,7 @@ contract TitleEscrowSignable is SigHelper, TitleEscrow, TitleEscrowSignableError
     return super.supportsInterface(interfaceId) || interfaceId == type(ITitleEscrowSignable).interfaceId;
   }
 
-  function transferBeneficiaryWithSig(BeneficiaryTransferEndorsement memory endorsement, Sig memory sig)
+  function transferBeneficiaryWithSig(TitleEscrowStructs.BeneficiaryTransferEndorsement memory endorsement, Sig memory sig)
     public
     virtual
     override
@@ -68,7 +68,7 @@ contract TitleEscrowSignable is SigHelper, TitleEscrow, TitleEscrowSignableError
     _setBeneficiary(endorsement.nominee);
   }
 
-  function cancelBeneficiaryTransfer(BeneficiaryTransferEndorsement memory endorsement)
+  function cancelBeneficiaryTransfer(TitleEscrowStructs.BeneficiaryTransferEndorsement memory endorsement)
     public
     virtual
     override
@@ -85,7 +85,7 @@ contract TitleEscrowSignable is SigHelper, TitleEscrow, TitleEscrowSignableError
     emit CancelBeneficiaryTransferEndorsement(hash, endorsement.holder, endorsement.tokenId);
   }
 
-  function _hash(BeneficiaryTransferEndorsement memory endorsement) internal view returns (bytes32) {
+  function _hash(TitleEscrowStructs.BeneficiaryTransferEndorsement memory endorsement) internal view returns (bytes32) {
     return
       keccak256(
         abi.encode(
